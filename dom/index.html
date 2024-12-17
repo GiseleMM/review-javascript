@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulacion del dom</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script>alert("Desde head"+document.body)</script> -->
+</head>
+
+<body>
+    <h1>DOM document Object Model</h1>
+    <p>Api definida para representar e interactuar con cualquier documento html</p>
+    <p>DOM es un modelo de docuemnto que se carga en el naveglador y que representa el documento como un arbol de nodo
+    </p>
+    <p>Conecta la página web a acripts o lenguajes de programcion</p>
+    <p>El dom proporciona formas de representar,guardar y manipular el documento html con un lenguale de script</p>
+    <p>En un principio el dom y js estaban elazados, pero después se desarrollaron como entidades separadas</p>
+    <h2>Cómo se accede al Dom?</h2>
+    <p>todos los navegadores web usan el modelo de objetos de documento para hacer accesible la pagina web al script</p>
+    <h2>tipo de datos</h2>
+    <ul>
+        <li>document</li>
+        <li>element</li>
+        <li>nodeList</li>
+        <li>attribute</li>
+    </ul>
+</body>
+<h2>document , window y Element</h2>
+<p>son objetos muy usados en el dom</p>
+<p>El objeto window representa algo que podria ser el navegador</p>
+<p>El objeto documnent representa la raíz del documento</p>
+<p>Element hereda de la interfaz genérica Node que proporciona muchos metods y propiedades sobre los elemento
+    individuales</p>
+<h2>Recorriendo el dom</h2>
+<p>El punto de entrada del Dom es el document</p>
+<p>Como propiedades del document tenemos:</p>
+<ul>
+    <li>document.docuemntElement (html etiqueta)</li>
+    <li>document.body (body etiqueta)</li>
+    <li>document.head (head etiqueta)</li>
+</ul>
+<p>si el script esta en el head y nos referimos al body va a ser null por que el navegador no lo leyo todavia</p>
+<h2>Hijos:childNodes,firstChild,lastChild</h2>
+<h3>Nodos hijos childNodes</h3>
+<p>son los hijos directos</p>
+<h3>Descendientes</h3>
+<p>todos los elementos anidaddos, incluyendo los hijos de los hijos y asi sucesivamente</p>
+<h3>childNodes</h3>
+<p>coleccion enumera todos los nodos hijos , incluidos los nodos de texto(espacio en blanco y no etiquetas)</p>
+<p>las propiedades firstChild y lastChild dan acceso al primer elemento y al ultimo</p>
+<p>la funcion elem.hasChildNodes() comproeba si hay nodos hijos</p>
+<p>ChildNOdes parace un array pero es una coleccion podemos usar for of para iterar NO FOR IN, pero no podemos usar los
+    metodos de los array tipo filter ,map
+    pero podemos convertirlo en un array con Array.form(document.body.childNodes).filter
+</p>
+<p>Las colecciones del Dom son de dolo lectura no se puede childNodes[i]=s </p>
+<h3>Hemanos y el padre</h3>
+<p>el hermano siguiente es el que esta a la derecha de la elemeto, es la propiedad nextSibling</p>
+<p>el hermano anterior es el de la izquierda,en la propiedad previousSibling</p>
+<p>El padre esta disponible en parentNode</p>
+<p>documnt.body.parentNode==document.documentElemnt // el padre de body es html y el ducumentElement es el html</p>
+
+<h3>Navegacion solo por elementos</h3>
+<p>Con childNodes podemos ver todos los nodos( node de texto, nodo elementos, nodos comentarios)</p>
+<p>Para manipular solo los nodos que representam la etiquetas de la pagina usamos:</p>
+<ul>
+    <li>children , hijos que tiene el elemento nodo</li>
+    <li>firstElemtChild,lastElemntChild, 1y ultimo hijo</li>
+    <li>previousElemetSibling,nextElemtSibling, hermanos</li>
+    <li>parentElement, el padre del elemento , de todos menos de document que no es un elemnet nodo</li>
+</ul>
+<p>para navegar hacia arriba desde cualquier elemnto al html usamos parentElemnt</p>
+<p>while(element=element.parentElemnt)
+    alert(element);
+</p>
+<h3>Tablas</h3>
+<p>Ciertos tipos de elementos del dom pueden tener propiedades adicionales especificas de su tipo, por ejemplo el
+    elemento table</p>
+<ul>
+    <li>table.rows, coleccion de tr</li>
+    <li>table.caption/thead/tfoot , referencias los elementos caption,theady tfoot</li>
+    <li>table.tbodies, coleccionde elemento tbody</li>
+    <li>tbody.rows ,da todas las tr del body</li>
+    <li>tr.cells ,collecion de celdas th,td dentro del tr dado</li>
+</ul>
+<h2>getElement y querySelector</h2>
+<p>si los elementos no estan cerca uno de otros existe metodo para obtener un elemento de la pagina</p>
+<h3 id="getElement">document.getElementById</h3>
+<p>si un elemento tiene un id podemos obrtener el elemento con este método</p>
+<h3>querySelectorAll</h3>
+<p>elemento.querySelectoAll(css) devuelve todos los elemntos dentro de elemnto que coincidad con el selector css datdo
+</p>
+<h3>querySelector</h3>
+<p>elemento.querySelector(css) devuelve el primer elemento para el selector dado</p>
+<h3>matches</h3>
+<p>elemento.matches(css) retorna un booleano indicando si el elemnto coincide con el selector dado</p>
+<h3>getElementsBy</h3>
+<p>Hay metodos que permite buscvar nodos por una etiqueta,clase,etc</p>
+<ul>
+    <li>elem.getElemnetsByTagName(tag) busca elementos con la etiqueta dada o si tag * busca cualquier etiqueta</li>
+    <li>elem.getElementsByClassName(clase) devuelve elemntos de la clase dada</li>
+    <li>document.getElementsByName(name) devuelve elemento con el atributo name dado</li>
+</ul>
+
+<h2>Propiedades del nodo:tipo,eyiqueta,contenido</h2>
+<p>Los diferentes nodos pueden tener diferentes propiedades</p>
+<p>cada nodo Dom pertence a la clase nativa correspondiente.Laraiz de la jerarquía es EventTraget(clase raiz
+    abstracta),proporciona el apoyo para eventos</p>
+<p>Node ,clase abstracta que sirve de base para los nodos Dom,proporciona propiedades comunes del nodo del Dom</p>
+<p>Document , hereda de HtmlDocument y es el documento como un todo</p>
+<p>Element, es la clase base para elementos DOM,proporciona metodos de elmentos genéricos</p>
+<p>HTMLElement , es la clase basica para todos los elementos HTML</p>
+<p>Es decir los nodos del DOM son objetos regualres de JS que usan clases y hernecia</p>
+<p>Podemos uar instaceof para saber el tipo de nodo</p>
+<h3>NodeName y TagName</h3>
+<p>podemos leer el nombre de etiquea de un nodo desde estas porpiedades.</p>
+<p>documento.body.nodeName define para cualquier Node(texto,comentario,etc)</p>
+<p>docuemnt.body.tagNme solo para los nodos Element</p>
+<h3>innerHTML los contenidos</h3>
+<p>la propiedad innerHTML permite obtener el htll dentro del elemento como un string.Tambien permite modificarlo o
+    agregar contenido</p>
+<p id="innerHtml">para llenar...</p>
+<p>document.getElementById("innerHtml").innerHTML+="agrego el innerHtml";
+</p>
+<h3>outerHtml, htmnl completo del elemeto</h3>
+<p>la propiedad outerHtml contiene el HTML compoleto del elemnto, es decir incluyendo el elemneto en si. si cambio con
+    outerHtml no cambio el contenido, sino que remplazo el elemnto en el DOM, es decir lo elimina el emento del dom e
+    einserta nuevo</p>
+<p>
+    console.log(document.getElementById("innerHtml").outerHTML='pouterHtml:)p </p>
+<h3>tetxContent, texto puro</h3>
+<p>proporciona acceso al texto dentro del elementos no los tags</p>
+<div id="textContent">
+    <h4>text content</h4>
+    <p> elemento.textContent </p>
+</div>
+<h3>NodeValue/data</h3>
+<p>la propiedad innerHtml solo funciona con nodos de elementos,los nodos texto tienen nodeValue y data</p>
+<h3>hidden</h3>
+<p>la propiedad hidden funciona como si pusieramos display none al elemento</p>
+<p id="hidden">hidden</p>
+<h3>otras propiedades</h3>
+<ul>
+    <li>value , valor para HTMLInputElement y HtmlSelectElement</li>
+    <li>href, el href de HtmlAnchorElement</li>
+    <li>id , para los HTmlElement</li>
+</ul>
+<h3>Resumen</h3>
+<p>Cada nodo DOM pertence a una determinada clase, y el conj de propiedades y métod provienen de la herencia</p>
+<h2>Atributos y propiedades </h2>
+<p>Cuando el navegador carga la pagina html genera objetos Dom a partir de el. Los atributos Html para los nodos de
+    elemento se convierten en propiedades</p>
+<p>ejemplo body id=xx entonces el objeto body.id=xxx </p>
+<p>Los nodos DOM son objetos normales de js, podemos alterarlos.</p>
+<h3>Propiedades DOM</h3>
+<p> Hay propiedades Dom integradas y otras podemos crearlas</p>
+<p>document.body.miData={name:"dddd",title:"titulo"};</p>
+<p>Tambien podemos agrgar metodos</p>
+<p>document.body.queSoy=function(){ alert(this.tagName)}</p>
+<p>Por lo tanto las propiedes y metodos DOm se comportan igual q los objetos JS</p>
+<h3>Atributos</h3>
+<p>Las etiquetas pueden tener atributos q cuando el navegador analiza y crea objetos crea propiedades Dom a partir de
+    ellos</p>
+<p>Esto sucede si el atributo es estandar , pero sin no lo es no puedo accederlo como porpiedade</p>
+<p> body id="estadar" algo="noestandar" document.body.id ->OK documento.body.algo=undefined</p>
+<p>Si un atributo no es estandar , no habrá prpiedad DOM para él pero aun asi se puede acceder con:</p>
+<ul>
+    <li id="hasAttribute" has="has">elem.hasAttribute(nomnre) comprueba si existe</li>
+    <li id="getAttribute" get="get">elem.getAtribute(nombre) obtiene el valor SON SIMEPRE STRING</li>
+    <li id="setAttribute" set="set">elem.setAttribute(nombre) establece el valor</li>
+    <li id="removeAttribute" remove="remove">elem.removeAttribute(nombre) elimina atributo </li>
+    <li id="attributes" uno="uno" dos="dos"> elem.attributes collecion de objetos attr con nombre y valor</li>
+</ul>
+<h3>La porpiedades DOM tienen tipo</h3>
+<p>Las porpiedades no son simpre string, por ejemplo input.checked es un booleano</p>
+<p>el atributo style es un atring , pero la propiedad style es un objeto</p>
+<p>ele.getAttribute(style) // color:red,size..</p>
+<p>ele.style // objeto ele.style.color</p>
+<p>el atributo href nos devuelve la url relativa y la propiedad nos da la url completa del sitio</p>
+<p>a.getAttribute(href) #inicio </p>
+<p>a.href htpp://site.com</p>
+<h3> Atribtos dataset</h3>
+<p> a veces los atributos no estandar se utilizan para pasar datos personalizados de html a js o marcar elementos</p>
+<p> div show-info="dato"</p>
+<p> document.querySelector('[show-info]').getAtttribute('show-info')</p>
+<p>Si quiero eliminar/agregar Atributo</p>
+<p>div.setAttribute("show-info",canceled)</p>
+<p> Para evitar conflictos , existen attributos data-* que estan reservados para el uso de programadors y estan
+    disponibles en la propiedad dataset</p>
+<p data-num="33">si un elem tiene un atributo data-num, esta diponible en elem.dataser.num</p>
+<h2>Modificando el dom</h2>
+<p>Para poder crear paginas dinamiar , debemos poder crear nuevos elemento y modificar el conenido existente</p>
+<!-- <script>alert("Desde body"+document.body)</script> -->
+<h3>Crear un elemento</h3>
+<p>document.createElement(tag), crea un nodo elemneto con la etiqueta dada</p>
+<p>document.createTextNode("contenido") crea un nodo texto con el texto dado</p>
+<p>puedo colocar mensaje una vez creado el elemnto:</p>
+<p>document.createElement("div").innerHtml="b hola /b"</p>
+<h3>Metodo de insercion</h3>
+<p>el nodo esta creado en memoria ahora debemos insertarlo dentro del documento</p>
+<ul>
+    <li>
+        elem.append(nodo), metodo para poner otro elemento dentro de el
+    </li>
+    <li>ele.prepend(nodo o string) inserta noo o string al principio del nodo</li>
+    <li>ele.before(nodo o string), inserta antes del nodo</li>
+    <li>ele.after(nodo o string) inserta despues del nodo</li>
+    <li>ele.remplaceWith(nodos o string) remplaza el nodo por otros o string</li>
+    <li>ele.insertAdjacentHtml(donde,html) me indica donde insertar relativo al elem, y el 2 param es un string que
+        inserta como html</li>
+    <ul>
+        <li>beforeBegin ,inserta el html antes del elem</li>
+        <li>afterbegin , inseta el html al principio</li>
+        <li>beforeend, inserta el html al final</li>
+        <li>afterend,inseta despues del elem</li>
+        <p>div.insetAdjacentHtml(afterend,'p adios /p')</p>
+    </ul>
+    <li>ele.insertAdjacentText(donde,texto), texto se inserta como texto no como html</li>
+    <li>ele,insertAjecaentElement(donde,ele) inseta un elelmnto</li>
+</ul>
+
+<h3>Eliminacion de nodos</h3>
+<p>para eliminar un nodo tenemos que tener la ref a ese nodo y luego usar el metodo node.remove()</p>
+<p>Todos los métodos de inserción automáticamente quitan el nodo del lugar viejo.
+<h3>Clonando nodo</h3>
+<p>podemos usar el metodo elem.cloneNode(true) crea una clonacion profunda de todos los atributos y subelemento, si
+    pongo false la clonacion se hace sin sus hijos</p>
+<div id="clone">
+    <h5>Titulo </h5>
+    <p>Esto se clona</p>
+</div>
+
+<h3>DocumentFragment</h3>
+<p>es un nodo que sirve de contenedor de otros nodos, . Cuando lo insertamos en algun lugar, lo que
+    se inserta es su contenido(los nodos que contiene)
+</p>
+<p>let frag=new DocumentFragment()</p>
+let li=document.createElement(li)
+frag.append(li);
+ul.append(frag);
+<h2>Estilos y clases</h2>
+<p>Hay dos fromas de dar estilo a un elemento con clsaes o con la propiedad style </p>
+<p>js puede modificar ambas, las clases y las propiedades style</p>
+<h3>ClassName y ClassList</h3>
+<p>con elem.className obtenemos lo correspondiente al atributo class</p>
+<p>si asignamos algo a className remplazara Todo la cadena de clases</p>
+<p>Si queremos agregar o eliminar clases usamos la propiedad elem.classList</p>
+<p>este es un objeto especial con métodos para agregar/eliminar y alterar una clase</p>
+<p>document.body.classList.add("agregoClase")</p>
+<p>document.body.ClassList.remove("quitoClase")</p>
+<p>document.body.clasList.toogle("agrega si no existe, y si existe quita")</p>
+<p>document.body.classList.constains("verifica si tiene esta clase")</p>
+
+<p id="clases">ejemplo clase</p>
+
+<h3>style de un elemento</h3>
+<p>la propiedad ele.style corresponde al atributo style del html</p>
+<p>las propiedades de varias palabras usan camelCase</p>
+<p>Importante: las propiedad style SOLO opera con el atributo style, no podemos leer ninguna clase css</p>
+<p>elem.style.backgroundColor</p>
+<p>si queremos asignar una prpiedad y luego removerla debemos asignar una cadena vacia </p>
+<p>elem.style.display="none"</p>
+<p>elem.style.display.="" si ponemos una cadena vacia el navegador apliaca estilo como si no existina style.display</p>
+<p id="style">ejemplo style</p>
+<h2>Eventos</h2>
+<p>un evento es una señal de que algo ocurrio, todos los nodos del dom pueden generar evento</p>
+<ul>
+    <li>click, evento del mouse</li>
+    <li>contextmenu, cuando el mouse hace click derecho</li>
+    <li>mouseover/mouseout , cuando el mouse ingresa/abandona un elemento</li>
+    <li>mousemove , cuando el mouse se mueve</li>
+    <li>keydown/keyup , cuando se presiona/suelta una tecla</li>
+    <li>submit, evento del form cuando se envia</li>
+    <li>DOMContentLoades, cuando el HTML es cargado y el dom esta completamente construido</li>
+    
+</ul>
+<h3>Controladores de eventos</h3>
+<p>para reaccionar a un evento podemos asignar un handler(controlador) q es una funcion q se ejecuta en caso de que se produzca el evento</p>
+<p>Hay muhcas maneras de asignar un handler:</p>
+<ul>
+    <li>como atributo html , con on(evento) por ejem button onclick="alert(click)"... o podemos tener una funcion en js y llamarla con onclick="miMetodo()"...</li>
+    <li>com propiedad del dom, elem.on(evento) ejemplo en el script.js elem.onclick=function(){...} y para eliminar un handler usamos elem.onclick=null</li>
+    <p>el elemento this dentro de un handler es el elemento</p>
+    <p>button onclick=alert(this.innerHTML) haz click  ... y me mostrara hazclick</p>
+    <p>si asignamos una funcion existente elem.onclick=metodo; no onclick=metodo()</p>
+    <p>pero si lo acemos en el html necesitamos los parentesis button onclick=metodo()</p>
+    <li> con addEventListener, con este metodo podemos asignar multiples handler a un solo evento</li>
+    <p>elemen.addEventListener(evento,handler,[options]) donde el evento va  ej:click SIN on, handler es la funcion</p>
+    <p>para remover un manejador usamos element.removeEventListener(evento,handler) nota si quiero remover no puedo hacer una funcion flecha por que seria otra funcion por mas que tenga el mismo código</p>
+
+
+</ul>
+<h3>Objeto del evento</h3>
+<p>cuando el  navegador crear un objeto del evento , coloca los detalles dentro y los psa como arg al handler</p>
+<p>algunas propiedades del objeto event son</p>
+<ul>
+    <li>event.type, tipo de evento ej click</li>
+    <li>event.currentTarget, el elemento, seria como el this si no es una fucnion flecha</li>
+    <li>event.clientX clientY , cordenas del cursos relativo a la ventana</li>
+    <p>button onclick=alert(event.type)... me dice click</p>
+    </ul>
+    <h3>Propagacion y captura</h3>
+    <p>Cuando un evento ocuure en un elemento, este 1° ejecuta los manejador asignados y luego los manejador de su padre</p>
+    <p>esto se conoce como propagacion, por que lso eventos se propagan desde el elemnto mas interior a los padres</p>
+    <p>si tenenos un div con un manejador click y dentro un p con un manjedor clik , cuando hagamos click en p va a ser p->div</p>
+    <h3>event.target</h3>
+    <p>un manejador en un elemento padre siempre puede obtener los detalles sobre donde ocurrio el evento,es decir el elemnto anidado mas profundo que casuo el elevento </p>
+    <p>este es accesible en event.target</p>
+    <p>event.target es el elemento objetivo que INICIO el evento</p>
+    <p>this o (event,currentTarget) es el elemnto actual, el que tiene un manejador ejecuatndose</p>
+    <p>por ejemplo si tenmos un form y solo tenemos un manejador form.onclick, este puede atrapar todos los click dentro del formulario</p>
+    <p>form.onlcik  donde this o event.currentTarget es el form  que tiene el manejador</p>
+    <p>form.onclick , donde event.target es el elemto dentro del form donde se hizo clik </p>
+    <h3>Detener la propagacion</h3>
+    <p>una propagacion de evento empieza desde el elemto objetivo hacia arriba,normalmet conatinua hasta html</p>
+    <p>pero cualquier manejador podria decidir que el evento no siga propagando con ele metodo event.stopPropagation()</p>
+    <p> pero no es recomendado sin una necesidad rela y obvia</p>
+    <h3>Delegacion de eventos</h3>
+    <p>Uno de los patrones de  manejo de eventos es la delegacion de eventos</p>
+    <p>la idea es que si tenemos muchos elemento  manejamo de manera similar , en lugar de asignar un manejador unico para cada uno, poner un unico manejador en un padre</p>
+    <p>en el anejador obtenemos el event.target que es donde ocurrio el evento y manejador</p>
+    <p>table.onclick=function(event){ let t=event.target; if(t.tagName=="td")return;}</p>
+    <h3>Acciones predeterminadas del navegador</h3>
+    <p>muchos eventos tienne acciones predetermindadas por el navegados , ej: click en enclace inicia navegacion a su uRL, submit en form inicia el envio al servidor del form</p>
+    <p>Si queremos que NO suceda la accion del nagador podemo:</p>
+    <ul>
+        <li>con el objeto event.preventDefault()     a href onclick() event.preventDefault()</li>
+        <li> si el controlador se asigna con on(evento) devolver false  a href onclick()="return false"</li>
+        <p>si omitimos el return false o el preventDefault() pero asignamos un manejdor , luego de ejecutar nuestro codigo el navegador realizara su accion predertermina</p>
+    </ul>
+
+    <div  onclick="alert(this.tagName)"> div propagacion
+        <p  onclick="alert(this.tagName)"> p programcion
+            <span onclick="alert(this.tagName)"> span propagacion</span>
+        </p>
+    </div>
+    <div  onclick="alert(this.tagName)"> 
+        <p onclick="event.stopPropagation()"> p programcion detengo propagacion
+            <span onclick="alert(this.tagName)"> span propagacion</span>
+        </p>
+    </div>
+    <form action="" >
+        <input type="text">text
+        <input type="email">email
+        <button type="submit">submit</button>
+    </form>
+    <h2>Formularios</h2>
+    <p>Los formularios del documento son miembros de la collecion document.forms, y podemos usar el name del form o el numero del formulario</p>
+    <p>document.forms.miForm  o  document.forms[2] ->este seria el 3 formulario en pag html
+    </p>
+<p>una vez que tenemos el formulario podemos acceder a cualquier elemento de el con form.elements.(name del input)</p>
+<p>si tenemos mas de un elemento con el mismo name (como el cxaso de radio) tenemos en form.elements[name] una collecion</p>
+<p>input radio name=age value 10</p>
+<p>input radio name=age value 20</p>
+<p>coleccion= document.forms[0].elements.age;</p>
+<p>Tambien podemos tener una referencia inversa desde un elemnto</p>
+<p>element.form  ej age.form</p>
+
+<form action="" name="miForm">
+<input type="text" name="nombre">nombre
+<input type="text" name="direccion">direccion
+<input type="text" name="club"> club
+
+<script>
+    // for (let index = 0; index < document.body.childNodes.length; index++) {
+    //     const element = document.body.childNodes[index];
+    //     console.log(element);
+
+    // }
+
+
+    // for (const element of document.body.childNodes) {
+    //     console.log(element);
+    // }
+    // alert(document.body.firstChild);
+    // alert(document.body.lastChild);
+
+    //subo desde el ultimo elemento del body (script)
+    let element = document.body.lastChild;
+    // while (element = element.parentElement) {
+    //     console.log(element);
+    // }
+    //solo etiquetas
+    // for (const element of document.body.children) {
+    //     console.log(element);
+
+    // }
+
+
+</script>
+<script src="script.js"></script>
+
+</html>
